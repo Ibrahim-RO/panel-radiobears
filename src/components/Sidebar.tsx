@@ -1,5 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { Outlet } from "react-router-dom";
+import { SideBarSubMenu } from "./SidebarMenu";
+import { navigation } from "../data/urls";
 
 
 export const SideBar = () => {
@@ -67,6 +69,11 @@ export const SideBar = () => {
           </div>
           <ul className="space-y-2 font-medium text-white mt-3">
 
+            <SideBarSubMenu 
+              title="DashBoard"
+              section="uno"
+              urlsInformation={navigation}
+            />
 
           </ul>
         </div>
