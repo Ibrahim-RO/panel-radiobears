@@ -1,7 +1,7 @@
 import { isAxiosError } from "axios"
 import { api } from "../lib/api"
 
-export const getAllUsers = async () => {
+export const getAllSocialMedias = async () => {
     try {
         const { data } = await api('')        
     } catch (error) {
@@ -11,7 +11,7 @@ export const getAllUsers = async () => {
     }
 }
 
-export const createUser = async () => {
+export const createSocialMedia = async () => {
     try {
         const { data } = await api.post('')
         return data
@@ -22,7 +22,7 @@ export const createUser = async () => {
     }
 }
 
-export const getUserById = async () => {
+export const getSocialMediaById = async () => {
     try {
         const { data } = await api('')
         return data        
@@ -33,11 +33,11 @@ export const getUserById = async () => {
     }
 }
 
-type UserAPIType = {
+type SocialMediaAPIType = {
 
 }
 
-export const updateUser = async () => {
+export const updateSocialMedia = async () => {
     try {
         const { data } = await api.put('')
         return data
@@ -48,7 +48,7 @@ export const updateUser = async () => {
     }
 }
 
-export const deleteUser = async () => {
+export const deleteSocialMedia = async () => {
     try {
         const { data } = await api.delete('')
         return data
