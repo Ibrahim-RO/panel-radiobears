@@ -14,6 +14,7 @@ export const IndexView = () => {
     queryFn: getAllEvents,
   })
 
+  console.log(data)
   const queryClient = useQueryClient()
 
   const { mutate } = useMutation({

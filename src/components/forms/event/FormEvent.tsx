@@ -62,8 +62,11 @@ export const FormEvent = ({ setShow }: { setShow: React.Dispatch<React.SetStateA
             reset()
         }
     })
+    
 
-    const handleForm = (formData: EventFormType) => mutate(formData);
+    const handleForm = (formData: EventFormType) => {
+        mutate(formData)
+    };
 
 
     return (

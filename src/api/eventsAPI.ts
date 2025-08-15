@@ -6,6 +6,7 @@ export const getAllEvents = async () => {
     try {
         const { data } = await api.get('/event/events')
         const response = dashboardEventSchema.safeParse(data)
+        console.log(response)
         if (response.success) return response.data
     } catch (error) {
         if (isAxiosError(error) && error.response) {
@@ -15,11 +16,21 @@ export const getAllEvents = async () => {
 }
 
 export const createEvent = async (formData: EventFormType) => {
+    const fd = new FormData();
+
+    fd.append("name", formData.name);
+    fd.append("description", formData.description);
+    fd.append("dateEvent", formData.dateEvent);
+    fd.append("image", formData.image);
+
+    console.log(fd)
+
     try {
-        const { data } = await api.post('/event/create-event', formData)
+        const { data } = await api.post('/event/create-event', fd)
         return data
     } catch (error) {
         if (isAxiosError(error) && error.response) {
+            console.log(error.response.data.error)
             throw new Error(error.response.data.error)
         }
     }
