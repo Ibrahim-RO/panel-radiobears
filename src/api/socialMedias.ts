@@ -1,9 +1,12 @@
 import { isAxiosError } from "axios"
 import { api } from "../lib/api"
+import { socialMediaSchema, type SocialMediaForm, type SocialMediaType } from "../schemas/socialMediaSchema"
 
 export const getAllSocialMedias = async () => {
     try {
-        const { data } = await api('')        
+        const { data } = await api('social/social-medias')   
+        const response = socialMediaSchema.safeParse(data)
+        if(response.success) return response.data     
     } catch (error) {
         if(isAxiosError(error) && error.response) {
             throw new Error(error.response.data.error)
@@ -11,9 +14,9 @@ export const getAllSocialMedias = async () => {
     }
 }
 
-export const createSocialMedia = async () => {
+export const createSocialMedia = async (formData: SocialMediaForm) => {
     try {
-        const { data } = await api.post('')
+        const { data } = await api.post<string>('social/create-social', formData)
         return data
     } catch (error) {
         if(isAxiosError(error) && error.response) {
@@ -22,9 +25,9 @@ export const createSocialMedia = async () => {
     }
 }
 
-export const getSocialMediaById = async () => {
+export const getSocialMediaById = async (id: SocialMediaType['id']) => {
     try {
-        const { data } = await api('')
+        const { data } = await api<string>(`social/social-media/${id}`)
         return data        
     } catch (error) {
         if(isAxiosError(error) && error.response) {
@@ -34,12 +37,13 @@ export const getSocialMediaById = async () => {
 }
 
 type SocialMediaAPIType = {
-
+    id: SocialMediaType['id']
+    formData: SocialMediaForm
 }
 
-export const updateSocialMedia = async () => {
+export const updateSocialMedia = async ({ id, formData } : SocialMediaAPIType) => {
     try {
-        const { data } = await api.put('')
+        const { data } = await api.put<string>(`social/edit-social/${id}`, formData)
         return data
     } catch (error) {
         if(isAxiosError(error) && error.response) {
@@ -48,9 +52,9 @@ export const updateSocialMedia = async () => {
     }
 }
 
-export const deleteSocialMedia = async () => {
+export const deleteSocialMedia = async (id: SocialMediaType['id']) => {
     try {
-        const { data } = await api.delete('')
+        const { data } = await api.delete<string>(`social/delete-social/${id}`)
         return data
     } catch (error) {
         if(isAxiosError(error) && error.response) {

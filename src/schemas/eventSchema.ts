@@ -4,7 +4,7 @@ export const eventSchema = z.object({
     id: z.number(),
     name: z.string(),
     description: z.string(),
-    image: z.string(),
+    image: z.string().nullable(),
     dateEvent: z.string()
     .regex(/^\d{4}-\d{2}-\d{2}$/, "Fecha debe tener formato YYYY-MM-DD")
     .refine(val => {
@@ -15,8 +15,10 @@ export const eventSchema = z.object({
     })
 });
 
-
 export const dashboardEventSchema = z.array(eventSchema)
 
 export type EventType = z.infer<typeof eventSchema>
-export type EventFormType = Pick<EventType, 'name' | 'description' | 'image' | 'dateEvent'>
+
+export type EventFormType = Pick<EventType, 'name' | 'description' | 'dateEvent'> & {
+  image?: string | File | null; 
+};

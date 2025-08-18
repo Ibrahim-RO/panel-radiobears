@@ -8,10 +8,12 @@ import { toast } from "sonner";
 
 export const FormEvent = ({ setShow }: { setShow: React.Dispatch<React.SetStateAction<boolean>> }) => {
     const [preview, setPreview] = useState<string | null>(null);
+    const [image, setImage] = useState<File | null>(null);
 
     const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const file = e.target.files?.[0];
         if (file) {
+            setImage(file);
             const reader = new FileReader();
             reader.onloadend = () => setPreview(reader.result as string);
             reader.readAsDataURL(file);
@@ -22,15 +24,18 @@ export const FormEvent = ({ setShow }: { setShow: React.Dispatch<React.SetStateA
         e.preventDefault();
         const file = e.dataTransfer.files?.[0];
         if (file) {
+            setImage(file); // 👈 Aquí también
             const reader = new FileReader();
             reader.onloadend = () => setPreview(reader.result as string);
             reader.readAsDataURL(file);
         }
     };
 
+
     const handleDragOver = (e: React.DragEvent<HTMLLabelElement>) => {
         e.preventDefault();
     };
+
 
     const formatDateToYYYYMMDD = (date: Date) => {
         const yyyy = date.getFullYear();
@@ -62,10 +67,22 @@ export const FormEvent = ({ setShow }: { setShow: React.Dispatch<React.SetStateA
             reset()
         }
     })
-    
 
-    const handleForm = (formData: EventFormType) => {
-        mutate(formData)
+    const handleForm = (formData: Omit<EventFormType, "image">) => {
+        const dataToSend = new FormData();
+
+        // Campos de texto
+        dataToSend.append("name", formData.name);
+        dataToSend.append("description", formData.description);
+        dataToSend.append("dateEvent", formData.dateEvent);
+
+        // Imagen solo si existe y es un File
+        if (image && image instanceof File) {
+            dataToSend.append("image", image);
+        }
+
+        // Mutación
+        mutate(dataToSend);
     };
 
 

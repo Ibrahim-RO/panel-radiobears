@@ -1,12 +1,11 @@
 import { isAxiosError } from "axios"
 import { api } from "../lib/api"
-import { dashboardEventSchema, type EventFormType, type EventType } from "../schemas/eventSchema"
+import { dashboardEventSchema, type EventType } from "../schemas/eventSchema"
 
 export const getAllEvents = async () => {
     try {
         const { data } = await api.get('/event/events')
         const response = dashboardEventSchema.safeParse(data)
-        console.log(response)
         if (response.success) return response.data
     } catch (error) {
         if (isAxiosError(error) && error.response) {
@@ -15,26 +14,19 @@ export const getAllEvents = async () => {
     }
 }
 
-export const createEvent = async (formData: EventFormType) => {
-    const fd = new FormData();
-
-    fd.append("name", formData.name);
-    fd.append("description", formData.description);
-    fd.append("dateEvent", formData.dateEvent);
-    fd.append("image", formData.image);
-
-    console.log(fd)
-
+export const createEvent = async (formData: FormData) => {
     try {
-        const { data } = await api.post('/event/create-event', fd)
-        return data
+        const { data } = await api.post("/event/create-event", formData, {
+            headers: { "Content-Type": "multipart/form-data" },
+        });
+        return data;
     } catch (error) {
         if (isAxiosError(error) && error.response) {
-            console.log(error.response.data.error)
-            throw new Error(error.response.data.error)
+            console.log(error.response.data.error);
+            throw new Error(error.response.data.error);
         }
     }
-}
+};
 
 export const getEventById = async (id: EventType['id']) => {
     try {
@@ -49,19 +41,22 @@ export const getEventById = async (id: EventType['id']) => {
 
 type EventAPIType = {
     id: EventType['id']
-    formData: EventFormType
+    formData: FormData
 }
 
 export const updateEvent = async ({ id, formData }: EventAPIType) => {
     try {
-        const { data } = await api.put<string>(`/event/edit-event/${id}`, formData)
-        return data
+        const { data } = await api.put<string>(`/event/edit-event/${id}`, formData, {
+            headers: { "Content-Type": "multipart/form-data" },
+        });
+        return data;
     } catch (error) {
         if (isAxiosError(error) && error.response) {
-            throw new Error(error.response.data.error)
+            throw new Error(error.response.data.error);
         }
     }
-}
+};
+
 
 export const deleteEvent = async (id: EventType['id']) => {
     try {

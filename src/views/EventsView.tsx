@@ -104,7 +104,7 @@ export const EventsView = () => {
             >
               {/* Imagen */}
               <img
-                src="https://e00-elmundo.uecdn.es/assets/multimedia/imagenes/2020/12/01/16068171341967.jpg"
+                src={evento.image || ''}
                 alt={evento.name}
                 className="w-full md:w-auto lg:size-40 rounded-xl object-cover"
               />
