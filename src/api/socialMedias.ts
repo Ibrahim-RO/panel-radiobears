@@ -1,11 +1,11 @@
 import { isAxiosError } from "axios"
 import { api } from "../lib/api"
-import { socialMediaSchema, type SocialMediaForm, type SocialMediaType } from "../schemas/socialMediaSchema"
+import { dashboardSocialMedias, type SocialMediaForm, type SocialMediaType } from "../schemas/socialMediaSchema"
 
 export const getAllSocialMedias = async () => {
     try {
         const { data } = await api('social/social-medias')   
-        const response = socialMediaSchema.safeParse(data)
+        const response = dashboardSocialMedias.safeParse(data)
         if(response.success) return response.data     
     } catch (error) {
         if(isAxiosError(error) && error.response) {

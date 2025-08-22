@@ -1,45 +1,45 @@
 import { useState } from "react"
+import { PencilSquareIcon, PlusCircleIcon, TrashIcon } from "@heroicons/react/24/solid"
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query"
-import { TrashIcon, PencilSquareIcon, PlusCircleIcon } from "@heroicons/react/24/solid"
-import { FormEvent } from "../components/forms/event/FormEvent"
 import { Modal } from "../components/Modal"
-import { deleteEvent, getAllEvents } from "../api/eventsAPI"
+import { deleteHost, getAllHost } from "../api/hostsAPI"
+import { HostForm } from "../components/forms/hosts/HostForm"
 import { toast } from "sonner"
+import { EditHost } from "../components/forms/hosts/EditHost"
 import { ConfirmAction } from "../components/ConfirmAction"
-import { EditEventForm } from "../components/forms/event/EditEventForm"
 
 export const HostsView = () => {
+
+  const [modalCreate, setModalCreate] = useState(false)
+  const [hostToEdit, setHostToEdit] = useState<number | null>(null)
+  const [modalDelete, setModalDelete] = useState(false)
+  const [eventToDelete, setEventToDelete] = useState<number | null>(null)
+
   const { data, isLoading } = useQuery({
-    queryKey: ["events"],
-    queryFn: getAllEvents,
+    queryKey: ["hosts"],
+    queryFn: getAllHost,
+    retry: 3
   })
 
   const queryClient = useQueryClient()
 
   const { mutate } = useMutation({
-    mutationFn: deleteEvent,
+    mutationFn: deleteHost,
     onError: (error) => {
       toast.error(error.message)
     },
     onSuccess: (data) => {
       toast.success(data)
-      queryClient.invalidateQueries({ queryKey: ["events"] })
+      queryClient.invalidateQueries({ queryKey: ["hosts"] })
     }
   })
 
-  // MODALES
-
-  const [modalCreate, setModalCreate] = useState(false)
-  const [eventToEdit, setEventToEdit] = useState<number | null>(null)
-  const [modalDelete, setModalDelete] = useState(false)
-  const [eventToDelete, setEventToDelete] = useState<number | null>(null)
-
   const openEditModal = (id: number) => {
-    setEventToEdit(id)
+    setHostToEdit(id)
   }
 
   const closeEditModal = () => {
-    setEventToEdit(null)
+    setHostToEdit(null)
   }
 
   const openDeleteModal = (id: number) => {
@@ -54,14 +54,12 @@ export const HostsView = () => {
       setModalDelete(false)
     }
   }
-
   if (isLoading) return 'Cargando...'
 
   return (
     <div className="space-y-5">
       <h1 className="text-4xl font-extrabold uppercase">Hosts</h1>
 
-      {/* Modal para crear evento */}
       <Modal
         show={modalCreate}
         setShow={setModalCreate}
@@ -69,7 +67,7 @@ export const HostsView = () => {
         icon={<PlusCircleIcon className="size-5" />}
         color="bg-amber-300 hover:bg-amber-400 font-semibold uppercase"
       >
-        <FormEvent setShow={setModalCreate} />
+        <HostForm setShow={setModalCreate} />
       </Modal>
 
       {/* Modal para confirmar eliminación */}
@@ -79,23 +77,22 @@ export const HostsView = () => {
         onConfirm={confirmDelete}
       />
 
-      {/* Modal para editar evento */}
-      {eventToEdit !== null && (
+      {hostToEdit !== null && (
         <Modal
           show={true}
           setShow={closeEditModal}
-          title="Editar"
-          icon={<PencilSquareIcon className="size-7" />}
-          color="hidden bg-blue-500 hover:bg-blue-600 text-white"
+          title="Agregar"
+          icon={<PlusCircleIcon className="size-5" />}
+          color="hidden bg-amber-300 hover:bg-amber-400 font-semibold uppercase"
         >
-          <EditEventForm
+          <EditHost
             setShow={closeEditModal}
-            id={eventToEdit}
+            id={hostToEdit}
           />
         </Modal>
       )}
 
-      {data?.length ? (
+      {data ? (
         <div className="space-y-5">
           {data.map(evento => (
             <div
@@ -104,7 +101,7 @@ export const HostsView = () => {
             >
               {/* Imagen */}
               <img
-                src="https://e00-elmundo.uecdn.es/assets/multimedia/imagenes/2020/12/01/16068171341967.jpg"
+                src={evento.image || ''}
                 alt={evento.name}
                 className="w-full md:w-auto lg:size-40 rounded-xl object-cover"
               />
@@ -119,8 +116,8 @@ export const HostsView = () => {
                 </div>
 
                 <div>
-                  <p className="font-bold">Fecha del evento</p>
-                  <p>{evento.dateEvent}</p>
+                  <p className="font-bold">Edad</p>
+                  <p>{evento.age}</p>
                 </div>
               </div>
 
@@ -142,9 +139,11 @@ export const HostsView = () => {
             </div>
           ))}
         </div>
-      ) : (
-        <p className="text-gray-900">No hay host, añade uno</p>
-      )}
+      )
+        : (
+          <p className="text-gray-900">No hay hosts registrados, añade uno</p>
+        )}
+
     </div>
   )
 }

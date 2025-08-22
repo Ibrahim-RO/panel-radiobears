@@ -4,6 +4,7 @@ import { api } from "../lib/api"
 export const getAllUsers = async () => {
     try {
         const { data } = await api('')        
+        return data
     } catch (error) {
         if(isAxiosError(error) && error.response) {
             throw new Error(error.response.data.error)
@@ -33,9 +34,9 @@ export const getUserById = async () => {
     }
 }
 
-type UserAPIType = {
+// type UserAPIType = {
 
-}
+// }
 
 export const updateUser = async () => {
     try {
