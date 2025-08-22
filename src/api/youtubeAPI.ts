@@ -1,11 +1,11 @@
 import { isAxiosError } from "axios"
 import { api } from "../lib/api"
-import { youtubeSchema, type YoutubeForm, type YouubeType } from "../schemas/youtubeSchema"
+import { dashboardYoutubeSchema, type YoutubeForm, type YoutubeType } from "../schemas/youtubeSchema"
 
 export const getAllVideos = async () => {
     try {
         const { data } = await api('youtube/videos-youtube') 
-        const response = youtubeSchema.safeParse(data)
+        const response = dashboardYoutubeSchema.safeParse(data)
         if(response.success) return response.data       
     } catch (error) {
         if(isAxiosError(error) && error.response) {
@@ -25,9 +25,9 @@ export const createVideo = async (formData: YoutubeForm) => {
     }
 }
 
-export const getVideoById = async (id: YouubeType['id']) => {
+export const getVideoById = async (id: YoutubeType['id']) => {
     try {
-        const { data } = await api<string>(`youtube/video-youtube/${id}`)
+        const { data } = await api(`youtube/video-youtube/${id}`)
         return data        
     } catch (error) {
         if(isAxiosError(error) && error.response) {
@@ -37,7 +37,7 @@ export const getVideoById = async (id: YouubeType['id']) => {
 }
 
 type YoutubeAPIType = {
-    id: YouubeType['id']
+    id: YoutubeType['id']
     formData: YoutubeForm
 }
 
@@ -52,7 +52,7 @@ export const updateVideo = async ({ id, formData } : YoutubeAPIType) => {
     }
 }
 
-export const deleteVideo = async (id: YouubeType['id']) => {
+export const deleteVideo = async (id: YoutubeType['id']) => {
     try {
         const { data } = await api.delete<string>(`youtube/delete-video/${id}`)
         return data

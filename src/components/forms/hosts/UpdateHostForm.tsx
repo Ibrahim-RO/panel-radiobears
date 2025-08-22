@@ -79,12 +79,12 @@ export const UpdateHostForm = ({ data, id, setShow }: UpdateHostProps) => {
   return (
     <>
       <h3 className='text-3xl uppercase text-center font-bold border-b-4 border-b-amber-950'>
-        Editar Evento
+        Editar Host
       </h3>
 
       <form onSubmit={handleSubmit(handleForm)} className='w-full space-y-3'>
         <div className='flex flex-col gap-3'>
-          <label htmlFor='name' className='text-sm uppercase font-bold'>Nombre del Evento</label>
+          <label htmlFor='name' className='text-sm uppercase font-bold'>Nombre del Host</label>
           <input
             type='text'
             id='name'
@@ -134,7 +134,7 @@ export const UpdateHostForm = ({ data, id, setShow }: UpdateHostProps) => {
 
         <input
           type='submit'
-          value='Guardar Evento'
+          value='Guardar Cambios'
           className='bg-amber-300 hover:bg-amber-400 transition-colors w-full p-2 rounded-lg font-bold uppercase cursor-pointer'
         />
       </form>

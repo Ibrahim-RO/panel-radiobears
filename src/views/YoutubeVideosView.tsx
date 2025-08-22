@@ -1,29 +1,29 @@
 import { useState } from "react"
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query"
 import { TrashIcon, PencilSquareIcon, PlusCircleIcon } from "@heroicons/react/24/solid"
-import { FormEvent } from "../components/forms/event/FormEvent"
 import { Modal } from "../components/Modal"
-import { deleteEvent, getAllEvents } from "../api/eventsAPI"
 import { toast } from "sonner"
 import { ConfirmAction } from "../components/ConfirmAction"
-import { EditEventForm } from "../components/forms/event/EditEventForm"
+import { deleteVideo, getAllVideos } from "../api/youtubeAPI"
+import { YoutubeVideoForm } from "../components/forms/youtube/YoutubeForm"
+import { EditYoutube } from "../components/forms/youtube/EditYoutube"
 
 export const YoutubeVideosView = () => {
   const { data, isLoading } = useQuery({
-    queryKey: ["events"],
-    queryFn: getAllEvents,
+    queryKey: ["youtubeVideos"],
+    queryFn: getAllVideos,
   })
 
   const queryClient = useQueryClient()
 
   const { mutate } = useMutation({
-    mutationFn: deleteEvent,
+    mutationFn: deleteVideo,
     onError: (error) => {
       toast.error(error.message)
     },
     onSuccess: (data) => {
       toast.success(data)
-      queryClient.invalidateQueries({ queryKey: ["events"] })
+      queryClient.invalidateQueries({ queryKey: ["youtubeVideos"] })
     }
   })
 
@@ -69,7 +69,7 @@ export const YoutubeVideosView = () => {
         icon={<PlusCircleIcon className="size-5" />}
         color="bg-amber-300 hover:bg-amber-400 font-semibold uppercase"
       >
-        <FormEvent setShow={setModalCreate} />
+        <YoutubeVideoForm setShow={setModalCreate} />
       </Modal>
 
       {/* Modal para confirmar eliminación */}
@@ -88,7 +88,7 @@ export const YoutubeVideosView = () => {
           icon={<PencilSquareIcon className="size-7" />}
           color="hidden bg-blue-500 hover:bg-blue-600 text-white"
         >
-          <EditEventForm
+          <EditYoutube
             setShow={closeEditModal}
             id={eventToEdit}
           />
@@ -97,44 +97,37 @@ export const YoutubeVideosView = () => {
 
       {data?.length ? (
         <div className="space-y-5">
-          {data.map(evento => (
+          {data.map(video => (
             <div
-              key={evento.id}
+              key={video.id}
               className="max-w-6xl bg-white rounded-2xl shadow-lg flex flex-col lg:flex-row justify-between p-5 gap-3"
             >
-              {/* Imagen */}
-              <img
-                src="https://e00-elmundo.uecdn.es/assets/multimedia/imagenes/2020/12/01/16068171341967.jpg"
-                alt={evento.name}
-                className="w-full md:w-auto lg:size-40 rounded-xl object-cover"
-              />
+              <div>
+                <h2 className="text-2xl font-bold">{video.title}</h2>
+                <p className="text-gray-700">{video.description}</p>
+                <a
+                  href={video.youtube_link}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-blue-500 hover:underline" 
+                >
+                  Ver video
+                </a>
 
-              {/* Texto */}
-              <div className="flex-1 lg:px-5 space-y-3">
-                <p className="text-2xl lg:text-3xl font-bold">{evento.name}</p>
-
-                <div>
-                  <p className="font-bold">Descripción</p>
-                  <p>{evento.description}</p>
-                </div>
-
-                <div>
-                  <p className="font-bold">Fecha del evento</p>
-                  <p>{evento.dateEvent}</p>
-                </div>
+                <p><b>Tipo:</b> {video.short ? 'Short' : 'Video'}</p>
               </div>
 
               {/* Botones */}
               <div className="flex flex-row lg:flex-col justify-normal lg:justify-center gap-3">
                 <button
                   className="bg-blue-500 hover:bg-blue-600 transition-colors rounded-lg px-3 py-2 flex items-center gap-2 cursor-pointer text-white"
-                  onClick={() => openEditModal(evento.id)}
+                  onClick={() => openEditModal(video.id)}
                 >
                   <PencilSquareIcon className="size-7" /> Editar
                 </button>
                 <button
                   className="bg-red-500 hover:bg-red-600 transition-colors rounded-lg px-3 py-2 flex items-center gap-2 cursor-pointer text-white"
-                  onClick={() => openDeleteModal(evento.id)}
+                  onClick={() => openDeleteModal(video.id)}
                 >
                   <TrashIcon className="size-7" /> Eliminar
                 </button>

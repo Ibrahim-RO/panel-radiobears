@@ -81,7 +81,7 @@ export const HostForm = ({ setShow }: { setShow: React.Dispatch<React.SetStateAc
     return (
         <>
             <h3 className='text-3xl uppercase text-center font-bold border-b-4 border-b-amber-950'>
-                Agregar Nuevo Evento
+                Agregar Nuevo Host
             </h3>
 
             <form
@@ -90,7 +90,7 @@ export const HostForm = ({ setShow }: { setShow: React.Dispatch<React.SetStateAc
             >
                 <div className='flex flex-col gap-3'>
                     <label htmlFor="name" className="text-sm uppercase font-bold">
-                        Nombre del Evento
+                        Nombre del Host
                     </label>
                     <input
                         type="text"

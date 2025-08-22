@@ -9,5 +9,7 @@ export const youtubeSchema = z.object({
     short: z.string()
 })
 
-export type YouubeType = z.infer<typeof youtubeSchema>
-export type YoutubeForm = Pick<YouubeType, 'title' | 'description' | 'url' | 'youtube_link' | 'short'>
+export const dashboardYoutubeSchema = z.array(youtubeSchema)
+
+export type YoutubeType = z.infer<typeof youtubeSchema>
+export type YoutubeForm = Pick<YoutubeType, 'title' | 'description' | 'url' | 'youtube_link' | 'short'>
