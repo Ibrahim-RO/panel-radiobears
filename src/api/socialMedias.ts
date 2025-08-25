@@ -14,28 +14,6 @@ export const getAllSocialMedias = async () => {
     }
 }
 
-export const createSocialMedia = async (formData: SocialMediaForm) => {
-    try {
-        const { data } = await api.post<string>('social/create-social', formData)
-        return data
-    } catch (error) {
-        if(isAxiosError(error) && error.response) {
-            throw new Error(error.response.data.error)
-        }
-    }
-}
-
-export const getSocialMediaById = async (id: SocialMediaType['id']) => {
-    try {
-        const { data } = await api<string>(`social/social-media/${id}`)
-        return data        
-    } catch (error) {
-        if(isAxiosError(error) && error.response) {
-            throw new Error(error.response.data.error)
-        }
-    }
-}
-
 type SocialMediaAPIType = {
     id: SocialMediaType['id']
     formData: SocialMediaForm
@@ -43,7 +21,7 @@ type SocialMediaAPIType = {
 
 export const updateSocialMedia = async ({ id, formData } : SocialMediaAPIType) => {
     try {
-        const { data } = await api.put<string>(`social/edit-social/${id}`, formData)
+        const { data } = await api.patch<string>(`social/edit-social/${id}`, formData)
         return data
     } catch (error) {
         if(isAxiosError(error) && error.response) {
@@ -52,9 +30,9 @@ export const updateSocialMedia = async ({ id, formData } : SocialMediaAPIType) =
     }
 }
 
-export const deleteSocialMedia = async (id: SocialMediaType['id']) => {
+export const toggleSocialMedia = async (id: SocialMediaType['id']) => {
     try {
-        const { data } = await api.delete<string>(`social/delete-social/${id}`)
+        const { data } = await api.patch<string>(`social/toggle-social/${id}`)
         return data
     } catch (error) {
         if(isAxiosError(error) && error.response) {
