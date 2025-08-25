@@ -1,8 +1,8 @@
 import { Navigate } from "react-router-dom";
 import { UpdateEvent } from "./UpdateEvent";
 import { useQuery } from "@tanstack/react-query";
-import type { EventType } from "../../../schemas/eventSchema";
-import { getEventById } from "../../../api/eventsAPI";
+import type { EventType } from "../../schemas/eventSchema";
+import { getEventById } from "../../api/eventsAPI";
 
 type EditEventFormProps = {
     setShow: React.Dispatch<React.SetStateAction<boolean>>

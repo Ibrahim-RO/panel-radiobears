@@ -1,12 +1,12 @@
 import { useState } from "react"
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query"
 import { TrashIcon, PencilSquareIcon, PlusCircleIcon } from "@heroicons/react/24/solid"
-import { Modal } from "../components/Modal"
+import { Modal } from "../components/global/Modal"
 import { toast } from "sonner"
-import { ConfirmAction } from "../components/ConfirmAction"
+import { ConfirmAction } from "../components/global/ConfirmAction"
 import { deleteVideo, getAllVideos } from "../api/youtubeAPI"
-import { YoutubeVideoForm } from "../components/forms/youtube/YoutubeForm"
-import { EditYoutube } from "../components/forms/youtube/EditYoutube"
+import { YoutubeVideoForm } from "../components/YoutubeVideosComponents/YoutubeForm"
+import { EditYoutube } from "../components/YoutubeVideosComponents/EditYoutube"
 
 export const YoutubeVideosView = () => {
   const { data, isLoading } = useQuery({

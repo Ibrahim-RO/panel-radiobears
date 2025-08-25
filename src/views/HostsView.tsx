@@ -1,12 +1,12 @@
 import { useState } from "react"
 import { PencilSquareIcon, PlusCircleIcon, TrashIcon } from "@heroicons/react/24/solid"
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query"
-import { Modal } from "../components/Modal"
+import { Modal } from "../components/global/Modal"
 import { deleteHost, getAllHost } from "../api/hostsAPI"
-import { HostForm } from "../components/forms/hosts/HostForm"
 import { toast } from "sonner"
-import { EditHost } from "../components/forms/hosts/EditHost"
-import { ConfirmAction } from "../components/ConfirmAction"
+import { ConfirmAction } from "../components/global/ConfirmAction"
+import { HostForm } from "../components/HostsComponent/HostForm"
+import { EditHost } from "../components/HostsComponent/EditHost"
 
 export const HostsView = () => {
 

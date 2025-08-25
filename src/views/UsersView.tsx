@@ -1,12 +1,12 @@
 import { useState } from "react"
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query"
 import { TrashIcon, PencilSquareIcon, PlusCircleIcon } from "@heroicons/react/24/solid"
-import { FormEvent } from "../components/forms/event/FormEvent"
-import { Modal } from "../components/Modal"
+import { Modal } from "../components/global/Modal"
 import { deleteEvent, getAllEvents } from "../api/eventsAPI"
 import { toast } from "sonner"
-import { ConfirmAction } from "../components/ConfirmAction"
-import { EditEventForm } from "../components/forms/event/EditEventForm"
+import { ConfirmAction } from "../components/global/ConfirmAction"
+import { FormEvent } from "../components/EventComponents/FormEvent"
+import { EditEventForm } from "../components/EventComponents/EditEventForm"
 
 export const UsersView = () => {
   const { data, isLoading } = useQuery({

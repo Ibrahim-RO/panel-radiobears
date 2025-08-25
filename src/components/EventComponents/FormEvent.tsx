@@ -1,12 +1,12 @@
 import { useState } from "react";
 import { useForm } from "react-hook-form"
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { ErrorMessage } from "../../ErrorMessage";
 import { toast } from "sonner";
-import type { HostFormType } from "../../../schemas/hostSchema";
-import { createHost } from "../../../api/hostsAPI";
+import type { EventFormType } from "../../schemas/eventSchema";
+import { createEvent } from "../../api/eventsAPI";
+import { ErrorMessage } from "../global/ErrorMessage";
 
-export const HostForm = ({ setShow }: { setShow: React.Dispatch<React.SetStateAction<boolean>> }) => {
+export const FormEvent = ({ setShow }: { setShow: React.Dispatch<React.SetStateAction<boolean>> }) => {
     const [preview, setPreview] = useState<string | null>(null);
     const [image, setImage] = useState<File | null>(null);
 
@@ -24,7 +24,7 @@ export const HostForm = ({ setShow }: { setShow: React.Dispatch<React.SetStateAc
         e.preventDefault();
         const file = e.dataTransfer.files?.[0];
         if (file) {
-            setImage(file); 
+            setImage(file); // 👈 Aquí también
             const reader = new FileReader();
             reader.onloadend = () => setPreview(reader.result as string);
             reader.readAsDataURL(file);
@@ -36,11 +36,19 @@ export const HostForm = ({ setShow }: { setShow: React.Dispatch<React.SetStateAc
         e.preventDefault();
     };
 
-    const initialValues: HostFormType = {
+
+    const formatDateToYYYYMMDD = (date: Date) => {
+        const yyyy = date.getFullYear();
+        const mm = String(date.getMonth() + 1).padStart(2, '0');
+        const dd = String(date.getDate()).padStart(2, '0');
+        return `${yyyy}-${mm}-${dd}`;
+    }
+
+    const initialValues: EventFormType = {
         name: "",
         description: "",
-        age: "",
         image: "",
+        dateEvent: formatDateToYYYYMMDD(new Date())
     }
 
     const { register, handleSubmit, reset, formState: { errors } } = useForm({ defaultValues: initialValues })
@@ -48,25 +56,25 @@ export const HostForm = ({ setShow }: { setShow: React.Dispatch<React.SetStateAc
     const queryClient = useQueryClient()
 
     const { mutate } = useMutation({
-        mutationFn: createHost,
+        mutationFn: createEvent,
         onError: (error) => {
             toast.error(error.message)
         },
         onSuccess: (data) => {
             toast.success(data)
-            queryClient.invalidateQueries({ queryKey: ["hosts"] })
+            queryClient.invalidateQueries({ queryKey: ["events"] })
             setShow(false)
             reset()
         }
     })
 
-    const handleForm = (formData: Omit<HostFormType, "image">) => {
+    const handleForm = (formData: Omit<EventFormType, "image">) => {
         const dataToSend = new FormData();
 
         // Campos de texto
         dataToSend.append("name", formData.name);
         dataToSend.append("description", formData.description);
-        dataToSend.append("age", formData.age);
+        dataToSend.append("dateEvent", formData.dateEvent);
 
         // Imagen solo si existe y es un File
         if (image && image instanceof File) {
@@ -81,7 +89,7 @@ export const HostForm = ({ setShow }: { setShow: React.Dispatch<React.SetStateAc
     return (
         <>
             <h3 className='text-3xl uppercase text-center font-bold border-b-4 border-b-amber-950'>
-                Agregar Nuevo Host
+                Agregar Nuevo Evento
             </h3>
 
             <form
@@ -90,7 +98,7 @@ export const HostForm = ({ setShow }: { setShow: React.Dispatch<React.SetStateAc
             >
                 <div className='flex flex-col gap-3'>
                     <label htmlFor="name" className="text-sm uppercase font-bold">
-                        Nombre del Host
+                        Nombre del Evento
                     </label>
                     <input
                         type="text"
@@ -121,20 +129,19 @@ export const HostForm = ({ setShow }: { setShow: React.Dispatch<React.SetStateAc
                 {errors.description && <ErrorMessage>{errors.description.message}</ErrorMessage>}
 
                 <div className='flex flex-col gap-3'>
-                    <label htmlFor="age" className="text-sm uppercase font-bold">
-                        Edad
+                    <label htmlFor="date" className="text-sm uppercase font-bold">
+                        Fecha
                     </label>
                     <input
-                        type="text"
-                        id='age'
+                        type="date"
+                        id='date'
                         className="bg-slate-100 p-2"
-                        placeholder='Edad...'
-                        {...register("age", {
-                            required: "La edad es obligatoria"
+                        {...register("dateEvent", {
+                            required: "La fecha es obligatoria"
                         })}
                     />
                 </div>
-                {errors.age && <ErrorMessage>{errors.age.message}</ErrorMessage>}
+                {errors.dateEvent && <ErrorMessage>{errors.dateEvent.message}</ErrorMessage>}
 
                 <div className='flex flex-col gap-3'>
                     <label htmlFor="image" className="text-sm uppercase font-bold">
@@ -164,7 +171,7 @@ export const HostForm = ({ setShow }: { setShow: React.Dispatch<React.SetStateAc
 
                 <input
                     type="submit"
-                    value="Guardar Host"
+                    value="Guardar Evento"
                     className='bg-amber-300 hover:bg-amber-400 transition-colors w-full p-2 rounded-lg font-bold uppercase cursor-pointer'
                 />
             </form>

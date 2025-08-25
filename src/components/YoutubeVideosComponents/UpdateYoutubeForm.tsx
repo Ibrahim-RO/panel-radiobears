@@ -1,9 +1,9 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useForm } from 'react-hook-form';
-import { ErrorMessage } from '../../ErrorMessage';
 import { toast } from 'sonner';
-import type { YoutubeForm, YoutubeType } from '../../../schemas/youtubeSchema';
-import { updateVideo } from '../../../api/youtubeAPI';
+import type { YoutubeForm, YoutubeType } from '../../schemas/youtubeSchema';
+import { updateVideo } from '../../api/youtubeAPI';
+import { ErrorMessage } from '../global/ErrorMessage';
 
 type UpdateYoutubeProps = {
     data: YoutubeForm

@@ -1,8 +1,8 @@
 import { useQuery } from '@tanstack/react-query'
-import { getHostById } from '../../../api/hostsAPI'
 import { Navigate } from 'react-router-dom'
 import { UpdateHostForm } from './UpdateHostForm'
-import type { HostType } from '../../../schemas/hostSchema'
+import type { HostType } from '../../schemas/hostSchema'
+import { getHostById } from '../../api/hostsAPI'
 
 type EditHostProps = {
     setShow: React.Dispatch<React.SetStateAction<boolean>>

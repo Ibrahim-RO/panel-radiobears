@@ -1,9 +1,9 @@
 import { useForm } from "react-hook-form"
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { ErrorMessage } from "../../ErrorMessage";
 import { toast } from "sonner";
-import { createVideo } from "../../../api/youtubeAPI";
-import type { YoutubeForm } from "../../../schemas/youtubeSchema";
+import type { YoutubeForm } from "../../schemas/youtubeSchema";
+import { createVideo } from "../../api/youtubeAPI";
+import { ErrorMessage } from "../global/ErrorMessage";
 
 export const YoutubeVideoForm = ({ setShow }: { setShow: React.Dispatch<React.SetStateAction<boolean>> }) => {
     const initialValues: YoutubeForm = {

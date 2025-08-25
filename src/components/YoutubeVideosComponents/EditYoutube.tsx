@@ -1,8 +1,8 @@
 import { useQuery } from '@tanstack/react-query'
 import { Navigate } from 'react-router-dom'
-import type { YoutubeType } from '../../../schemas/youtubeSchema'
 import { UpdateYoutubeForm } from './UpdateYoutubeForm'
-import { getVideoById } from '../../../api/youtubeAPI'
+import type { YoutubeType } from '../../schemas/youtubeSchema'
+import { getVideoById } from '../../api/youtubeAPI'
 
 type EditYoutubeProps = {
     setShow: React.Dispatch<React.SetStateAction<boolean>>

@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
-import type { EventFormType, EventType } from '../../../schemas/eventSchema';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useForm } from 'react-hook-form';
-import { ErrorMessage } from '../../ErrorMessage';
-import { updateEvent } from '../../../api/eventsAPI';
 import { toast } from 'sonner';
+import type { EventFormType, EventType } from '../../schemas/eventSchema';
+import { updateEvent } from '../../api/eventsAPI';
+import { ErrorMessage } from '../global/ErrorMessage';
 
 type UpdateEventProps = {
   data: EventFormType & { image?: string };

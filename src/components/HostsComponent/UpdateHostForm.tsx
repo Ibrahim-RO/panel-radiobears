@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useForm } from 'react-hook-form';
-import { ErrorMessage } from '../../ErrorMessage';
 import { toast } from 'sonner';
-import type { HostFormType, HostType } from '../../../schemas/hostSchema';
-import { updateHost } from '../../../api/hostsAPI';
+import type { HostFormType, HostType } from '../../schemas/hostSchema';
+import { updateHost } from '../../api/hostsAPI';
+import { ErrorMessage } from '../global/ErrorMessage';
 
 type UpdateHostProps = {
   data: HostFormType & { image?: string };

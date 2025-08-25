@@ -3,7 +3,7 @@ import { getAllSocialMedias, toggleSocialMedia, updateSocialMedia } from "../api
 import type { JSX } from "react"
 import { toast } from "sonner"
 import type { SocialMediaForm, SocialMediaType } from "../schemas/socialMediaSchema"
-import { SocialMediaItem } from "../components/SocialMediaItem"
+import { SocialMediaItem } from "../components/SocialMediaComponent/SocialMediaItem"
 
 export const SocialMediasView = () => {
   const queryClient = useQueryClient()

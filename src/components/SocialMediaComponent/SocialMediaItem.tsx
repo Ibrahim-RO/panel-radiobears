@@ -1,5 +1,5 @@
 import { useState, type JSX } from "react"
-import type { SocialMediaForm, SocialMediaType } from "../schemas/socialMediaSchema"
+import type { SocialMediaForm, SocialMediaType } from "../../schemas/socialMediaSchema"
 
 type SocialMediaItemProps = {
   social: SocialMediaType
