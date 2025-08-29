@@ -1,8 +1,8 @@
 export const navigation = [
-    { name: "Dashboard", to: "/" },
-    { name: "Youtube", to: "/youtube" },
-    { name: "Hosts", to: "/hosts" },
-    { name: "Eventos", to: "/events" },
-    { name: "Redes Sociales", to: "/social-medias" },
-    { name: "Usuarios", to: "/users" },
+    { name: "Dashboard", to: "/dashboard/" },
+    { name: "Youtube", to: "/dashboard/youtube" },
+    { name: "Hosts", to: "/dashboard/hosts" },
+    { name: "Eventos", to: "/dashboard/events" },
+    { name: "Redes Sociales", to: "/dashboard/social-medias" },
+    { name: "Usuarios", to: "/dashboard/users" },
 ]
