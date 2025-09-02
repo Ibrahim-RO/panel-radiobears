@@ -3,7 +3,7 @@ import { Toaster } from 'sonner'
 
 export const AuthLayout = () => {
   return (
-    <div className='h-screen flex flex-col justify-center items-center '>
+    <div className='h-screen flex flex-col justify-center items-center bg-amber-950'>
         <Outlet />
         <Toaster />
     </div>

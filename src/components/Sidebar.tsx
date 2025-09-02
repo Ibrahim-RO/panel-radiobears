@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { Outlet } from "react-router-dom";
+import { Outlet, useNavigate } from "react-router-dom";
 import { SideBarSubMenu } from "./SidebarMenu";
 import { navigation } from "../data/urls";
 
@@ -25,28 +25,15 @@ export const SideBar = () => {
     };
   }, [isSidebarOpen]);
 
+  const navigate = useNavigate()
+
+  const handleLogout = () => {
+    localStorage.removeItem("AUTH_TOKEN")
+    navigate('/')
+  }
+
   return (
     <div className="relative">
-      {/* Botón toggle para abrir/cerrar sidebar */}
-      <button
-        onClick={() => setSidebarOpen(!isSidebarOpen)}
-        type="button"
-        className="inline-flex items-center p-2 mt-2 ms-3 text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
-      >
-        {isSidebarOpen ? (
-          <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-          </svg>
-        ) : (
-          <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 20 20">
-            <path
-              clipRule="evenodd"
-              fillRule="evenodd"
-              d="M2 4.75A.75.75 0 012.75 4h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 4.75zm0 10.5a.75.75 0 01.75-.75h7.5a.75.75 0 010 1.5h-7.5a.75.75 0 01-.75-.75zM2 10a.75.75 0 01.75-.75h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 10z"
-            />
-          </svg>
-        )}
-      </button>
 
       {/* Overlay en móviles */}
       {isSidebarOpen && (
@@ -69,7 +56,7 @@ export const SideBar = () => {
           </div>
           <ul className="space-y-2 font-medium text-white mt-3">
 
-            <SideBarSubMenu 
+            <SideBarSubMenu
               title="DashBoard"
               section="uno"
               urlsInformation={navigation}
@@ -80,7 +67,34 @@ export const SideBar = () => {
       </aside>
 
       {/* Contenido principal */}
-      <div className="w-full h-12 bg-[#2e1302] hidden md:block"></div>
+      <div className="w-full flex md:flex-row-reverse justify-between items-center h-18 bg-[#2e1302] px-6 py-3">
+        <button
+          onClick={() => setSidebarOpen(!isSidebarOpen)}
+          type="button"
+          className="inline-flex items-center p-2 mt-2 ms-3 text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
+        >
+          {isSidebarOpen ? (
+            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+            </svg>
+          ) : (
+            <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 20 20">
+              <path
+                clipRule="evenodd"
+                fillRule="evenodd"
+                d="M2 4.75A.75.75 0 012.75 4h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 4.75zm0 10.5a.75.75 0 01.75-.75h7.5a.75.75 0 010 1.5h-7.5a.75.75 0 01-.75-.75zM2 10a.75.75 0 01.75-.75h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 10z"
+              />
+            </svg>
+          )}
+        </button>
+
+        <button 
+          className="bg-yellow-400 rounded-lg text-black p-2 font-semibold uppercase"
+          onClick={handleLogout}
+        >
+          Cerrar sesión
+        </button>
+      </div>
       <div className="py-4 px-8 sm:ml-64">
         <Outlet />
       </div>

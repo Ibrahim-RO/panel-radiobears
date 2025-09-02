@@ -4,5 +4,4 @@ export const navigation = [
     { name: "Hosts", to: "/dashboard/hosts" },
     { name: "Eventos", to: "/dashboard/events" },
     { name: "Redes Sociales", to: "/dashboard/social-medias" },
-    { name: "Usuarios", to: "/dashboard/users" },
 ]

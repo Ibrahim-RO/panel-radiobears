@@ -14,7 +14,7 @@ export const LoginView = () => {
     password: ''
   }
 
-  const { register, handleSubmit, formState: { errors }, reset } = useForm({defaultValues: initialValues})
+  const { register, handleSubmit, formState: { errors } } = useForm({defaultValues: initialValues})
 
   const queryClient = useQueryClient()
   const navigate= useNavigate()
@@ -35,21 +35,21 @@ export const LoginView = () => {
   return (
     <>
       <div className="flex items-center gap-2">
-        <img src="https://framerusercontent.com/images/G86SEp0QCremiXNsbHp2o3BdYQA.png?scale-down-to=512" alt="Logo" className="w-45 animation-float " />
+        <img src="/logo.png" alt="Logo" className="w-60 animation-float " />
       </div>
       <form
         onSubmit={handleSubmit(handleLogin)} 
-        className="w-full max-w-lg bg-white/15 p-6 rounded-lg space-y-5"
+        className="w-full max-w-lg bg-white/15 p-10 rounded-lg space-y-5 mt-10"
       >
         <div>
           <div className="h-14 flex items-center bg-white-100 p-1">
-            <div className="h-full bg-gray-500 p-2.5 rounded-l-lg">
+            <div className="h-full bg-gray-800 p-2.5 rounded-l-lg">
               <UserCircleIcon className="size-7 text-gray-200 " />
             </div>
             <input
               type="email"
               id="email"
-              className="w-full h-full border border-slate-400 pl-2 py-2.5 outline-0 rounded-r-lg"
+              className="w-full h-full border-2 border-gray-800 pl-2 py-2.5 outline-0 rounded-r-lg text-white"
               placeholder="Correo electrónico"
               {...register('email', {
                 required: 'El correo es obligatorio',
@@ -65,13 +65,13 @@ export const LoginView = () => {
 
         <div>
           <div className="h-14 flex items-center bg-white-100 p-1">
-            <div className="h-full bg-gray-500 p-2.5 rounded-l-lg">
+            <div className="h-full bg-gray-800 p-2.5 rounded-l-lg">
               <LockClosedIcon className="size-7 text-gray-200 " />
             </div>
             <input
               type="password"
               id="password"
-              className="w-full h-full border border-slate-400 pl-2 py-2.5 outline-0 rounded-r-lg"
+              className="w-full h-full border-2 border-gray-800 pl-2 py-2.5 outline-0 rounded-r-lg text-white"
               placeholder="********"
               {...register('password', {
                 required: 'La contraseña es obligatoria',

@@ -4,7 +4,6 @@ import { IndexView } from "./views/IndexView"
 import { EventsView } from "./views/EventsView"
 import { HostsView } from "./views/HostsView"
 import { YoutubeVideosView } from "./views/YoutubeVideosView"
-import { UsersView } from "./views/UsersView"
 import { SocialMediasView } from "./views/SocialMediasView"
 import { LoginView } from "./views/LoginView"
 import { AuthLayout } from "./layouts/AuthLayout"
@@ -23,7 +22,6 @@ export const AppRouter = () => {
                 <Route path={"events"} element={<EventsView />} />
                 <Route path={"social-medias"} element={<SocialMediasView />} />
                 <Route path={"youtube"} element={<YoutubeVideosView />} />
-                <Route path={"users"} element={<UsersView />} />
             </Route>
         </Routes>
     </BrowserRouter>
