@@ -8,16 +8,17 @@ import type { AuthPanelForm } from "../schemas/authPanel"
 import { useNavigate } from "react-router-dom"
 
 export const LoginView = () => {
-
   const initialValues: AuthPanelForm = {
-    email: '',
-    password: ''
+    email: "",
+    password: "",
   }
 
-  const { register, handleSubmit, formState: { errors } } = useForm({defaultValues: initialValues})
+  const { register, handleSubmit, formState: { errors } } = useForm({
+    defaultValues: initialValues,
+  })
 
   const queryClient = useQueryClient()
-  const navigate= useNavigate()
+  const navigate = useNavigate()
 
   const { mutate } = useMutation({
     mutationFn: authenticateUser,
@@ -25,72 +26,81 @@ export const LoginView = () => {
       toast.error(error.message)
     },
     onSuccess: (user) => {
-      queryClient.setQueryData(['user'], user)
-      navigate('/dashboard')
-    }
+      queryClient.setQueryData(["user"], user)
+      navigate("/dashboard")
+    },
   })
 
   const handleLogin = (formData: AuthPanelForm) => mutate(formData)
 
   return (
-    <>
-      <div className="flex items-center gap-2">
-        <img src="/logo.png" alt="Logo" className="w-60 animation-float " />
+    <div className="w-lg flex flex-col justify-center items-center bg-white/10 rounded-2xl text-white p-10">
+      {/* Logo */}
+      <div className="flex flex-col items-center mb-6">
+        <img src="/logo.png" alt="Logo" className="w-40 animate-pulse" />
+        <h1 className="text-3xl font-bold mt-4">Bienvenido</h1>
+        <p className="text-gray-400 text-sm">Inicia sesión para continuar</p>
       </div>
+
       <form
-        onSubmit={handleSubmit(handleLogin)} 
-        className="w-full max-w-lg bg-white/15 p-10 rounded-lg space-y-5 mt-10"
+        onSubmit={handleSubmit(handleLogin)}
+        className="w-full max-w-2xl bg-white/10 backdrop-blur-lg border border-white/20 p-8 rounded-2xl shadow-xl space-y-6"
       >
         <div>
-          <div className="h-14 flex items-center bg-white-100 p-1">
-            <div className="h-full bg-gray-800 p-2.5 rounded-l-lg">
-              <UserCircleIcon className="size-7 text-gray-200 " />
+          <div className="h-14 flex items-center bg-gray-800/50 border border-gray-700 rounded-lg overflow-hidden transition">
+            <div className="h-full flex justify-center items-center bg-gray-800 p-3">
+              <UserCircleIcon className="size-6 text-gray-300" />
             </div>
             <input
               type="email"
               id="email"
-              className="w-full h-full border-2 border-gray-800 pl-2 py-2.5 outline-0 rounded-r-lg text-white"
+              className="w-full h-full bg-transparent px-3 py-2 outline-none text-white placeholder-gray-400"
               placeholder="Correo electrónico"
-              {...register('email', {
-                required: 'El correo es obligatorio',
+              {...register("email", {
+                required: "El correo es obligatorio",
                 pattern: {
                   value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
-                  message: 'El correo no es válido'
-                }
+                  message: "El correo no es válido",
+                },
               })}
             />
           </div>
+          {errors.email && (
+            <ErrorMessage>{errors.email.message}</ErrorMessage>
+          )}
         </div>
-        {errors.email && <ErrorMessage>{errors.email.message}</ErrorMessage>}
 
         <div>
-          <div className="h-14 flex items-center bg-white-100 p-1">
-            <div className="h-full bg-gray-800 p-2.5 rounded-l-lg">
-              <LockClosedIcon className="size-7 text-gray-200 " />
+          <div className="h-14 flex items-center bg-gray-800/50 border border-gray-700 rounded-lg overflow-hidden transition">
+            <div className="h-full flex justify-center items-center bg-gray-800 p-3">
+              <LockClosedIcon className="size-6 text-gray-300" />
             </div>
             <input
               type="password"
               id="password"
-              className="w-full h-full border-2 border-gray-800 pl-2 py-2.5 outline-0 rounded-r-lg text-white"
-              placeholder="********"
-              {...register('password', {
-                required: 'La contraseña es obligatoria',
+              className="w-full h-full bg-transparent px-3 py-2 outline-none text-white placeholder-gray-400"
+              placeholder="Contraseña"
+              {...register("password", {
+                required: "La contraseña es obligatoria",
                 minLength: {
                   value: 8,
-                  message: 'La contraseña debe tener al menos 6 caracteres'
-                }
+                  message: "Debe tener al menos 8 caracteres",
+                },
               })}
             />
           </div>
+          {errors.password && (
+            <ErrorMessage>{errors.password.message}</ErrorMessage>
+          )}
         </div>
-        {errors.password && <ErrorMessage>{errors.password.message}</ErrorMessage>}
 
-        <input
+        <button
           type="submit"
-          value="Iniciar sesión"
-          className="w-full bg-yellow-400 hover:bg-yellow-500 transition-colors cursor-pointer text-black uppercase font-bold p-3 rounded-lg"
-        />
+          className="w-full bg-gradient-to-r from-yellow-400 to-yellow-500 hover:from-yellow-500 hover:to-yellow-600 transition-all cursor-pointer text-black font-bold py-3 rounded-lg shadow-lg uppercase tracking-wide"
+        >
+          Iniciar sesión
+        </button>
       </form>
-    </>
+    </div>
   )
 }
