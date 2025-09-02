@@ -51,10 +51,10 @@ export const LoginView = () => {
             <div className="h-full flex justify-center items-center bg-gray-800 p-3">
               <UserCircleIcon className="size-6 text-gray-300" />
             </div>
-            <input
+            <input  
               type="email"
               id="email"
-              className="w-full h-full bg-transparent px-3 py-2 outline-none text-white placeholder-gray-400"
+              className="w-full h-full bg-transparent px-3 py-2 outline-none text-white"
               placeholder="Correo electrónico"
               {...register("email", {
                 required: "El correo es obligatorio",
@@ -78,7 +78,7 @@ export const LoginView = () => {
             <input
               type="password"
               id="password"
-              className="w-full h-full bg-transparent px-3 py-2 outline-none text-white placeholder-gray-400"
+              className="w-full h-full bg-transparent px-3 py-2 outline-none text-white"
               placeholder="Contraseña"
               {...register("password", {
                 required: "La contraseña es obligatoria",

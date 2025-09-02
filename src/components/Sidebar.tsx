@@ -89,7 +89,7 @@ export const SideBar = () => {
         </button>
 
         <button 
-          className="bg-yellow-400 rounded-lg text-black p-2 font-semibold uppercase"
+          className="bg-yellow-400 hover:bg-yellow-500 transition-colors rounded-lg text-black p-2 font-semibold uppercase cursor-pointer"
           onClick={handleLogout}
         >
           Cerrar sesión

@@ -1,8 +1,6 @@
 import { Dialog, DialogPanel, Transition, TransitionChild } from '@headlessui/react'
-import { useQueryClient } from '@tanstack/react-query'
 import { Fragment, type ReactNode } from 'react'
 import type { JSX } from 'react/jsx-runtime'
-import type { EventType } from '../schemas/eventSchema'
 
 type ModalProps = {
     children: ReactNode
@@ -11,16 +9,12 @@ type ModalProps = {
     title: string
     icon: JSX.Element
     color: string
-    id?: EventType['id']
 }
 
-export function Modal({ show, setShow, children, title, icon, color, id} : ModalProps) {
-
-    const queryClient = useQueryClient()
+export function Modal({ show, setShow, children, title, icon, color} : ModalProps) {
 
     const closeModal = () => {
         setShow(false)
-        queryClient.invalidateQueries({queryKey: ["event", id]})
     }
 
     return (
