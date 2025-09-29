@@ -5,7 +5,7 @@ import { ErrorMessage } from "../components/global/ErrorMessage"
 import { toast } from "sonner"
 import { authenticateUser } from "../api/loginPanel"
 import type { AuthPanelForm } from "../schemas/authPanel"
-import { useNavigate } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 
 export const LoginView = () => {
   const initialValues: AuthPanelForm = {
@@ -100,6 +100,12 @@ export const LoginView = () => {
         >
           Iniciar sesión
         </button>
+
+        <nav>
+          <Link to='/auth/register'>
+            ¿No tienes una cuenta? Registrate
+          </Link>
+        </nav>
       </form>
     </div>
   )
