@@ -1,13 +1,11 @@
-import axios from "axios"
-
-const API_URL = "http://localhost:4000/api/news"
+import { api } from "../lib/api"
 
 export const getAllNews = async () => {
-  const { data } = await axios.get(API_URL)
+  const { data } = await api('news')
   return data
 }
 
 export const deleteNews = async (id: number) => {
-  const { data } = await axios.delete(`${API_URL}/${id}`)
+  const { data } = await api.delete(`news/${id}`)
   return data.message || "Noticia eliminada"
 }
